@@ -140,7 +140,7 @@ body {
 .home-text {
   top: 35px;
   left: 24px;
-  color: rgb(90, 45, 12);
+  color: #000000;
   height: auto;
   position: absolute;
   font-size: 28px;
@@ -194,27 +194,9 @@ body {
   background-color: #fffed3;
 }
 
-
-.next-button-outer {
-  bottom: 20px;
-  right: 58px;
-  position: absolute;
-  color: rgba(255, 255, 255, 1);
-  background-color: rgba(0, 0, 0, 1);
-  font-size: 20px;
-  font-style: Bold;
-  text-align: left;
-  font-weight: 700;
-  border-radius: 10px;
-  padding-right: 40px;
-  padding-left: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 .quiz-question {
-  top: 20px;
-  left: 50px;
+  top: 25px;
+  left: 25px;
   position: absolute;
   color: rgba(0, 0, 0, 1);
   width: 765px;
@@ -223,4 +205,56 @@ body {
   text-align: left;
   font-weight: 700;
   line-height: normal;
+}
+
+.quiz-answers{
+  top: 80px;
+  left: 25px;
+  position: relative;
+  width: 780px;
+  height: 300px;
+}
+
+.quiz-answer {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  margin-top: 15px;
+  padding-left: 20px;
+  color: #FFFFFF;
+  background-color: #ffcc00;
+  width: 100%;
+  font-size: 18px;
+  font-style: Bold;
+  text-align: left;
+  font-weight: 700;
+  border-radius: 10px;
+  border-width: 3px;
+  border-color: #ffcc00;
+}
+
+
+.check-button-outer {
+  bottom: 20px;
+  right: 58px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 1);
+  border-radius: 10px;
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.check-button{
+  color: rgba(255, 255, 255, 1);
+  font-size: 16px;
+  font-style: Bold;
+  text-align: left;
+  font-weight: 700;
+}
+
+.quiz-answer.selected {
+  color: #ffcc00; /* Background color when selected */
+  background-color: black;
+  border-color: #ffe47a;
 }

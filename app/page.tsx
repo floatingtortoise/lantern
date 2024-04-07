@@ -1,7 +1,22 @@
+"use client";
 import Image from 'next/image'
 import Link from 'next/link';
+import React, { useState } from 'react';
 
 const Homepage = () => {
+
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+
+
+  const handleAnswerClick = (answerId: string) => {
+    if (selectedAnswers.includes(answerId)) {
+      // If the clicked answer is already selected, deselect it
+      setSelectedAnswers(selectedAnswers.filter((id) => id !== answerId));
+    } else {
+      // Otherwise, select the clicked answer
+      setSelectedAnswers([...selectedAnswers, answerId]);
+    }
+  };
 
   return (
     <div className="container">
@@ -31,12 +46,33 @@ const Homepage = () => {
           <span className="view-notes">View Notes</span>
         </button>
 
+        {/* <div className='quiz'>
+          <span className="quiz-question">What are examples of cleaning and transforming data?</span>
+          <div className="quiz-answers">
+            <button className="quiz-answer" id="answer1">Removing missing values, converting data types</button>
+            <button className="quiz-answer" id="answer2">Creating new columns, filtering data</button>
+            <button className="quiz-answer" id="answer3">All of the above</button>
+            <button className="quiz-answer" id="answer4">None of the above</button>
+          </div>
+          <button className="check-button-outer">
+            <span className="check-button">Check Answer</span>
+          </button>
+        </div> */}
+
         <div className='quiz'>
-            <span className="quiz-question">What are examples of cleaning and transforming data?</span>
-          <button className="next-button-outer">
-            <span className="next-button">Next</span>
+          <span className="quiz-question">What are examples of cleaning and transforming data?</span>
+          <div className="quiz-answers">
+            <button className={`quiz-answer ${selectedAnswers.includes('answer1') ? 'selected' : ''}`} id="answer1" onClick={() => handleAnswerClick('answer1')}>Removing missing values, converting data types</button>
+            <button className={`quiz-answer ${selectedAnswers.includes('answer2') ? 'selected' : ''}`} id="answer2" onClick={() => handleAnswerClick('answer2')}>Creating new columns, filtering data</button>
+            <button className={`quiz-answer ${selectedAnswers.includes('answer3') ? 'selected' : ''}`} id="answer3" onClick={() => handleAnswerClick('answer3')}>All of the above</button>
+            <button className={`quiz-answer ${selectedAnswers.includes('answer4') ? 'selected' : ''}`} id="answer4" onClick={() => handleAnswerClick('answer4')}>None of the above</button>
+            
+          </div>
+          <button className="check-button-outer">
+            <span className="check-button">Check Answer</span>
           </button>
         </div>
+
     </div>
   )
 }
