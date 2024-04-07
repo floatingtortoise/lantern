@@ -221,15 +221,13 @@ body {
   margin-top: 15px;
   padding-left: 20px;
   color: #FFFFFF;
-  background-color: #ffcc00;
+  background-color: #a0a0a0;
   width: 100%;
   font-size: 18px;
   font-style: Bold;
   text-align: left;
   font-weight: 700;
   border-radius: 10px;
-  border-width: 3px;
-  border-color: #ffcc00;
 }
 
 
@@ -254,7 +252,5 @@ body {
 }
 
 .quiz-answer.selected {
-  color: #ffcc00; /* Background color when selected */
-  background-color: black;
-  border-color: #ffe47a;
+  background-color: #3b86ff;
 }
