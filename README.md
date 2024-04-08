@@ -31,5 +31,6 @@ cd frontend
 npm run dev
 ```
 
+# How it looks like to run backend and frontend at the same time:
 <img width="956" alt="Screenshot 2024-04-07 at 11 23 10 PM" src="https://github.com/floatingtortoise/lantern/assets/97700939/7bda775d-d14a-44c6-8929-e4a59564385f">
 
