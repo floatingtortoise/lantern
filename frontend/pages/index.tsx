@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import Link from 'next/link';
 
-function quizPage() {
+function QuizPage() {
   // initialize welcome message as "loading"
-  const [question, setQuestion] = useState("loading")
-  const [choices, setChoices] = useState([])
+  const [question, setQuestion] = React.useState("loading");
+  const [choices, setChoices] = React.useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/home')
@@ -29,6 +29,20 @@ function quizPage() {
     } else {
       // Otherwise, select the clicked answer
       setSelectedAnswers([...selectedAnswers, answerId]);
+    }
+  };
+
+  const handleCheck = (correctId: string) => {
+    if (selectedAnswers.includes(correctId)) {
+      (
+        document.getElementById("feedback-correct") as HTMLInputElement
+      ).style.display = "block";
+      // (document.getElementById("feedback-wrong") as HTMLInputElement).style.display = "none";
+    } else {
+      (
+        document.getElementById("feedback-wrong") as HTMLInputElement
+      ).style.display = "block";
+      // (document.getElementById("feedback-correct") as HTMLInputElement).style.display = "none";
     }
   };
 
@@ -57,6 +71,22 @@ function quizPage() {
           <span>Lesson 1 - A Matter of Science</span>
         </span>
 
+        <span id="feedback-correct">
+        <p>
+          Nice! Molecules make up matter and are always made of one or more
+          atoms.
+        </p>
+        </span>
+
+        <span id="feedback-wrong">
+          <p>
+            Molecules make up compounds, but that does not mean they are them.
+          </p>
+          {/* <br></br>
+          <p>What is a compound?</p>
+          <input className="feedback-input" placeholder="Type here"></input> */}
+        </span>
+
         <button className="view-notes-outer">
           <span className="view-notes">View Notes</span>
         </button>
@@ -69,13 +99,15 @@ function quizPage() {
             <button className={`quiz-answer ${selectedAnswers.includes('answer3') ? 'selected' : ''}`} id="answer3" onClick={() => handleAnswerClick('answer3')}>{choices[2]}</button>
             <button className={`quiz-answer ${selectedAnswers.includes('answer4') ? 'selected' : ''}`} id="answer4" onClick={() => handleAnswerClick('answer4')}>{choices[3]}</button>
           </div>
-          <button className="check-button-outer">
+
+        <button className="check-button-outer" onClick={() => handleCheck("answer4")}>
             <span className="check-button">Check Answer</span>
-          </button>
+        </button>
+
         </div>
 
     </div>
   )
 }
 
-export default quizPage
+export default QuizPage
