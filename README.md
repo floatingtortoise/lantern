@@ -1,4 +1,4 @@
-#Run Backend
+# Run Backend
 
 **First time set up**
 
@@ -20,7 +20,7 @@ cd backend
 python3 server.py
 ```
 
-#Run Frontend
+# Run Frontend
 ```
 cd frontend
 npm run dev
