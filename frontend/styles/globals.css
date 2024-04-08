@@ -186,3 +186,38 @@
   .quiz-answer.selected {
     background-color: #3b86ff;
   }
+
+
+#feedback-wrong{
+  top: 250px;
+  left: 1204px;
+  color: rgba(0, 0, 0, 1);
+  background-color: rgb(255, 150, 150);
+  position: absolute;
+  font-size: 12px;
+  text-align: left;
+  padding: 20px;
+  width: 200px;
+  border-radius: 8px;
+  display: none;
+}
+
+#feedback-correct{
+  top: 360px;
+  left: 1204px;
+  color: rgba(0, 0, 0, 1);
+  background-color: rgb(150, 255, 152);
+  position: absolute;
+  font-size: 12px;
+  text-align: left;
+  padding: 20px;
+  width: 200px;
+  border-radius: 8px;
+  display: none;
+}
+
+.feedback-input{
+  border-radius: 4px;
+  padding:3px;
+  margin-top: 3px;
+}

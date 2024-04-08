@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/bellali/Desktop/Lantern Frontend/next-python/backend/venv/bin/python3" "$0" "$@"
-' '''
+#!/Users/bradleyesterman/Code/lantern/backend/venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
