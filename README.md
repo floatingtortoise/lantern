@@ -1,6 +1,9 @@
 #Run Backend
+
 **First time set up**
+
 delete the "backend/venv" file, then:
+
 ```
 cd backend
 python3 -m venv venv
@@ -11,6 +14,7 @@ pip3 install flask-cors
 ```
 
 **Run after settting up**
+
 ```
 cd backend
 python3 server.py
