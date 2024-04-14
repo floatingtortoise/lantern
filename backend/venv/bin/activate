@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/bellali/Desktop/Lantern Frontend/next-python/backend/venv"
+VIRTUAL_ENV="/Users/ange/Desktop/CS 385/Project/lantern/backend/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/bellali/Desktop/Lantern Frontend/next-python/backend/venv"
+set -gx VIRTUAL_ENV "/Users/ange/Desktop/CS 385/Project/lantern/backend/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

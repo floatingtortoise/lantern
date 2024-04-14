@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/bellali/Desktop/Lantern Frontend/next-python/backend/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/ange/Desktop/CS 385/Project/lantern/backend/venv/bin/python3.11" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re
