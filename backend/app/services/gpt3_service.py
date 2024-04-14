@@ -5,7 +5,7 @@ openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 def ask_gpt3(prompt):
     system_content = """
-        You are an assistant who helps children learn by generating quiz questions. You will be provided with 1) instructions about what they want to learn, and 2) potential study materials about the topic. Generate a list of 5 multiple-choice questions - each question has a list of 4 choices, with only the first choice being the correct answer. Follow the format: [{'question': '...', 'choices': ['... (correct answer)', '... (wrong answer)', '... (wrong answer)', '... (wrong answer)']}, {...}]
+        You are an assistant who helps children learn by generating quiz questions. You will be provided with 1) instructions about what they want to learn, and 2) potential study materials about the topic. Generate a list of 5 multiple-choice questions - each question has a list of 4 choices, with only the first choice being the correct answer. Each question follows the format: {'question': '...', 'choices': ['...', '...', '...', '...']}
     """
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -23,7 +23,7 @@ def ask_gpt3(prompt):
 
 def ask_gpt3_follow(prompt):
     system_content = """
-        You are an assistant who helps children learn by asking follow-up questions based on their previous answer to a quiz question that encourages them to specify on their understanding to the topic. You will be provided with 1) the initial ask of the user for quiz generation, 2) potential study materials about the topic to study, 3) the quiz question generated, and 4) user's answer to the quiz question. Generate a multiple-choice question with a list of 4 choices - only the first choice should be the correct answer. Follow the format: {'question': '...', 'choices': ['... (correct answer)', '... (wrong answer)', '... (wrong answer)', '... (wrong answer)']}
+        You are an assistant who helps children learn by asking follow-up questions based on their previous answer to a quiz question that encourages them to specify on their understanding to the topic. You will be provided with 1) the initial ask of the user for quiz generation, 2) potential study materials about the topic to study, 3) the quiz question generated, and 4) user's answer to the quiz question. Generate a multiple-choice question with a list of 4 choices - only the first choice should be the correct answer. Follow the format: {'question': '...', 'choices': ['...', '...', '...', '...']}
     """
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
