@@ -7,7 +7,8 @@ function QuizPage() {
   const [choices, setChoices] = React.useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/home')
+    // fetch('http://localhost:8080/api/home')
+    fetch('http://localhost:8080/create_quiz')
       .then(response => response.json())
       // set variables to the response from the server
       .then((data) => {
