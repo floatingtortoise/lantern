@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { time } from "console";
 
 function quizPage() {
   // initialize welcome message as "loading"
   const [question, setQuestion] = useState("loading");
   const [choices, setChoices] = useState([]);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:8080/api/home')
-  //     .then(response => response.json())
-  //     // set variables to the response from the server
-  //     .then((data) => {
-  //       // put backend data into frontend
-  //       // console.log(data)
-  //       // console.log(data.question)
-  //       // console.log(data.choices)
-  //       setQuestion(data.question);
-  //       setChoices(data.choices);
-  //     })
-  // }, [])
+  useEffect(() => {
+    fetch("http://localhost:8080/api/home")
+      .then((response) => response.json())
+      // set variables to the response from the server
+      .then((data) => {
+        // put backend data into frontend
+        // console.log(data)
+        // console.log(data.question)
+        // console.log(data.choices)
+        setQuestion(data.question);
+        setChoices(data.choices);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setQuestion("Select all that are true about molecules");
+        setChoices([
+          "Molecules make up matter.",
+          "Molcules are compounds.",
+          "Molecules are made of atoms.",
+          "All of the above",
+        ]);
+      });
+  }, []);
 
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 
@@ -32,11 +43,37 @@ function quizPage() {
     }
   };
 
+  const handleSubmit = () => {
+    setQuestion("Question 2");
+    setChoices(["hey", "hi", "hello", "hola"]);
+    (
+      document.getElementById("feedback-correct") as HTMLInputElement
+    ).style.display = "none";
+    (
+      document.getElementById("feedback-wrong") as HTMLInputElement
+    ).style.display = "none";
+    (
+      document.getElementById("check-button") as HTMLInputElement
+    ).style.display = "block";
+    (
+      document.getElementById("submit-button") as HTMLInputElement
+    ).style.display = "none";
+    selectedAnswers.length = 0;
+  };
+
   const handleCheck = (correctId: string) => {
     if (selectedAnswers.includes(correctId)) {
       (
         document.getElementById("feedback-correct") as HTMLInputElement
       ).style.display = "block";
+      (
+        document.getElementById("check-button") as HTMLInputElement
+      ).style.display = "none";
+      (
+        document.getElementById("submit-button") as HTMLInputElement
+      ).style.display = "block";
+      // setQuestion("Question 2");
+      // setChoices(["hey", "hi", "hello", "hola"]);
       // (document.getElementById("feedback-wrong") as HTMLInputElement).style.display = "none";
     } else {
       (
@@ -129,9 +166,17 @@ function quizPage() {
         </div>
         <button
           className="check-button-outer"
-          onClick={() => handleCheck("answer4")}
+          id="check-button"
+          onClick={() => handleCheck("answer3")}
         >
           <span className="check-button">Check Answer</span>
+        </button>
+        <button
+          className="check-button-outer"
+          id="submit-button"
+          onClick={() => handleSubmit()}
+        >
+          <span className="check-button">Submit</span>
         </button>
       </div>
     </div>
