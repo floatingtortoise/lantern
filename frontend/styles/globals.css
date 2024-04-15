@@ -123,7 +123,7 @@
     height: 480px;
     position: absolute;
     border-radius: 8px;
-    background-color: #fffed3;
+    background-color: #DFB8D7C2;
   }
   
   .quiz-question {
@@ -153,7 +153,7 @@
     margin-top: 15px;
     padding-left: 20px;
     color: #FFFFFF;
-    background-color: #a0a0a0;
+    background-color: #FFFFFFB8;
     width: 100%;
     font-size: 18px;
     font-style: Bold;
@@ -184,7 +184,7 @@
   }
   
   .quiz-answer.selected {
-    background-color: #3b86ff;
+    background-color: #8bb7ff;
   }
 
 

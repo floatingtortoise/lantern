@@ -6,19 +6,19 @@ function quizPage() {
   const [question, setQuestion] = useState("loading");
   const [choices, setChoices] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:8080/api/home')
-      .then(response => response.json())
-      // set variables to the response from the server
-      .then((data) => {
-        // put backend data into frontend
-        // console.log(data)
-        // console.log(data.question)
-        // console.log(data.choices)
-        setQuestion(data.question);
-        setChoices(data.choices);
-      })
-  }, [])
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/api/home')
+  //     .then(response => response.json())
+  //     // set variables to the response from the server
+  //     .then((data) => {
+  //       // put backend data into frontend
+  //       // console.log(data)
+  //       // console.log(data.question)
+  //       // console.log(data.choices)
+  //       setQuestion(data.question);
+  //       setChoices(data.choices);
+  //     })
+  // }, [])
 
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 
@@ -49,7 +49,7 @@ function quizPage() {
   return (
     <div className="container">
       <span className="left-column" />
-      <Link href="/settings" className="button" id="left1">
+      <Link href="/dashboard" className="button" id="left1">
         <span>Dashboard</span>
       </Link>
 
