@@ -1,9 +1,5 @@
 #!/Users/bradleyesterman/Code/lantern/backend/venv/bin/python3.11
 # -*- coding: utf-8 -*-
-#!/bin/sh
-'''exec' "/Users/bradleyesterman/Code/lantern/backend/venv/bin/python3" "$0" "$@"
-' '''
-
 import re
 import sys
 from flask.cli import main
