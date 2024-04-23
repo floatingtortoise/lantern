@@ -16,9 +16,10 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@quiz_bp.route('/create_quiz', methods=['POST'])
+@quiz_bp.route('/create_quiz', methods=['GET'])
 def create_quiz():
-    message = request.form.get('message', '')  # Extract text message from form data
+    message = "molecules"
+    #message = request.form.get('message', '')  # Extract text message from form data
 
     files = request.files.getlist('files')  # Allows for multiple files
     material = []

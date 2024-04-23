@@ -1,25 +1,65 @@
-import React, {useEffect, useState} from 'react'
-import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 function QuizPage() {
+  //declare the Quiz interface
+  interface Quiz {
+    question: string;
+    choices: string[];
+  }
+
   // initialize welcome message as "loading"
   const [question, setQuestion] = React.useState("loading");
-  const [choices, setChoices] = React.useState([]);
+  //const [choices, setChoices] = React.useState([]);
+  const [choices, setChoices] = React.useState<string[]>([]);
+   // Initialize global quiz question counter
+   let quizCounter = 0;
+   // State for quizList
+   const [quizList, setQuizList] = useState<Quiz[]>([]);
+  //let quizList: Quiz[] = [];
+
+  function parseQuizQuestions(inputText: string) {
+    const data = JSON.parse(inputText);
+    const quizQuestions = data["quiz_question(s)"];
+    const questionBlocks = quizQuestions.trim().split("\n\n");
+    const parsedQuizList: Quiz[] = [];
+
+    questionBlocks.forEach((block: string) => {
+      const lines = block.split("\n").map(line => line.trim());
+      const this_question = lines[0];
+      const this_choices = [lines[2], lines[3], lines[4], lines[5]];
+      parsedQuizList.push({
+        question: this_question,
+        choices: this_choices
+      });
+    });
+
+    return parsedQuizList;
+  }
 
   useEffect(() => {
-    // fetch('http://localhost:8080/api/home')
-    fetch('http://localhost:8080/create_quiz')
+    fetch('http://localhost:8080/quiz/create_quiz')
       .then(response => response.json())
       // set variables to the response from the server
       .then((data) => {
-        // put backend data into frontend
-        // console.log(data)
-        // console.log(data.question)
-        // console.log(data.choices)
-        setQuestion(data.question);
-        setChoices(data.choices);
+        const jsonString = JSON.stringify(data);
+        const thisList = parseQuizQuestions(jsonString);
+        setQuizList(thisList);
+        console.log(thisList);
+        setQuestion(thisList[quizCounter].question);
+        setChoices(thisList[quizCounter].choices);
       })
-  }, [])
+      .catch((error) => {
+        console.error("Error:", error);
+        setQuestion("Select all that are true about molecules");
+        setChoices([
+          "Molecules make up matter.",
+          "Molcules are compounds.",
+          "Molecules are made of atoms.",
+          "All of the above",
+        ]);
+      });
+  }, []);
 
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 
@@ -33,17 +73,43 @@ function QuizPage() {
     }
   };
 
+  const handleSubmit = (quizList: Quiz[]) => {
+    // setQuestion("Question 2");
+    // setChoices(["hey", "hi", "hello", "hola"]);
+    quizCounter++;
+    console.log(quizList);
+    setQuestion(quizList[quizCounter].question);
+    setChoices(quizList[quizCounter].choices);
+    (
+      document.getElementById("feedback-correct") as HTMLInputElement
+    ).style.display = "none";
+    (
+      document.getElementById("feedback-wrong") as HTMLInputElement
+    ).style.display = "none";
+    (
+      document.getElementById("check-button") as HTMLInputElement
+    ).style.display = "block";
+    (
+      document.getElementById("submit-button") as HTMLInputElement
+    ).style.display = "none";
+    selectedAnswers.length = 0;
+  };
+
   const handleCheck = (correctId: string) => {
     if (selectedAnswers.includes(correctId)) {
       (
         document.getElementById("feedback-correct") as HTMLInputElement
       ).style.display = "block";
-      // (document.getElementById("feedback-wrong") as HTMLInputElement).style.display = "none";
+      (
+        document.getElementById("check-button") as HTMLInputElement
+      ).style.display = "none";
+      (
+        document.getElementById("submit-button") as HTMLInputElement
+      ).style.display = "block";
     } else {
       (
         document.getElementById("feedback-wrong") as HTMLInputElement
       ).style.display = "block";
-      // (document.getElementById("feedback-correct") as HTMLInputElement).style.display = "none";
     }
   };
 
@@ -51,61 +117,69 @@ function QuizPage() {
 
     <div className="container">
 
-        <span
-          className="left-column"
-        />
-        <Link href="/settings" className="button" id="left1">
-            <span>Dashboard</span>
-        </Link>
+      <span
+        className="left-column"
+      />
+       <Link href="/dashboard" className="button" id="left1">
+        <span>Dashboard</span>
+      </Link>
 
-        <Link href="/settings1" className="button" id="left2">
-            <span>Settings</span>
-        </Link>
+      <Link href="/settings1" className="button" id="left2">
+        <span>Settings</span>
+      </Link>
 
-        <Link href="/settings2" className="button" id="left3">
-            <span>Community</span>
-        </Link>
+      <Link href="/settings2" className="button" id="left3">
+        <span>Community</span>
+      </Link>
 
-        <span className="home-text">Lantern AI</span>
+      <span className="home-text">Lantern AI</span>
 
-        <span className="lesson-name">
-          <span>Lesson 1 - A Matter of Science</span>
-        </span>
+      <span className="lesson-name">
+        <span>Lesson 1 - A Matter of Science</span>
+      </span>
 
-        <span id="feedback-correct">
+      <span id="feedback-correct">
         <p>
           Nice! Molecules make up matter and are always made of one or more
           atoms.
         </p>
-        </span>
+      </span>
 
-        <span id="feedback-wrong">
-          <p>
-            Molecules make up compounds, but that does not mean they are them.
-          </p>
-          {/* <br></br>
-          <p>What is a compound?</p>
-          <input className="feedback-input" placeholder="Type here"></input> */}
-        </span>
+      <span id="feedback-wrong">
+        <p>
+          Molecules make up compounds, but that does not mean they are them.
+        </p>
+      </span>
 
-        <button className="view-notes-outer">
-          <span className="view-notes">View Notes</span>
-        </button>
+      <button className="view-notes-outer">
+        <span className="view-notes">View Notes</span>
+      </button>
 
-        <div className='quiz'>
-          <span className="quiz-question">{question}</span>
-          <div className="quiz-answers">
-            <button className={`quiz-answer ${selectedAnswers.includes('answer1') ? 'selected' : ''}`} id="answer1" onClick={() => handleAnswerClick('answer1')}>{choices[0]}</button>
+      <div className='quiz'>
+        <span className="quiz-question">{question}</span>
+        <div className="quiz-answers">
+          <button className={`quiz-answer ${selectedAnswers.includes('answer1') ? 'selected' : ''}`} id="answer1" onClick={() => handleAnswerClick('answer1')}>{choices[0]}</button>
             <button className={`quiz-answer ${selectedAnswers.includes('answer2') ? 'selected' : ''}`} id="answer2" onClick={() => handleAnswerClick('answer2')}>{choices[1]}</button>
             <button className={`quiz-answer ${selectedAnswers.includes('answer3') ? 'selected' : ''}`} id="answer3" onClick={() => handleAnswerClick('answer3')}>{choices[2]}</button>
             <button className={`quiz-answer ${selectedAnswers.includes('answer4') ? 'selected' : ''}`} id="answer4" onClick={() => handleAnswerClick('answer4')}>{choices[3]}</button>
-          </div>
+        </div>
 
-        <button className="check-button-outer" onClick={() => handleCheck("answer4")}>
-            <span className="check-button">Check Answer</span>
+        <button
+          className="check-button-outer"
+          id="check-button"
+          onClick={() => handleCheck("answer3")}
+        >
+          <span className="check-button">Check Answer</span>
+        </button>
+        <button
+          className="check-button-outer"
+          id="submit-button"
+          onClick={() => handleSubmit(quizList)}
+        >
+          <span className="check-button">Submit</span>
         </button>
 
-        </div>
+      </div>
 
     </div>
   )
