@@ -2,22 +2,22 @@
 
 **First time set up**
 
-delete the "backend/venv" file, then:
+first add a .env file (ask me for it)
 
 ```
 cd backend
-python3 -m venv venv
-source venv/bin/activate
-touch server.py
-pip3 install flask
-pip3 install flask-cors
+pip install python-dotenv
+pip install SQLAlchemy
+pip install -r requirements.txt
+pip install pymupdf==1.23.26
+python3 run.py
 ```
 
 **Run after settting up**
 
 ```
 cd backend
-python3 server.py
+python3 run.py
 ```
 **URL for backend test**
 
