@@ -1,6 +1,7 @@
 // Dashboard.tsx
 import React from "react";
 import Link from "next/link";
+import Upload from "./upload";
 
 const Dashboard = () => {
   const cards = [
@@ -34,6 +35,7 @@ const Dashboard = () => {
       <span>
         <input style={styles.studyWhat} placeholder="What do you want to study?"></input>
         <button style={styles.uploadButton}>Submit</button>
+        <Upload  />
       </span>
       <div style={styles.cardsContainer}>
         {cards.map((card, index) => (
