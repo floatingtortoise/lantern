@@ -227,3 +227,82 @@ body {
 #submit-button{
   display: none;
 }
+
+
+.dash-container {
+  display: "flex";
+  flexDirection: "column";
+  alignItems: "flex-start";
+  backgroundColor: "#FBF6EF";
+  height: "100vh";
+  boxSizing: "border-box";
+  padding: "20px";
+  paddingLeft: 300;
+  paddingTop: 130;
+}
+
+.uploadButton {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background-color: #e9e7da;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: start;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.cardCircle {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.cardBody {
+  text-align: center;
+}
+
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #333333;
+}
+
+.cardText {
+  font-size: 0.9rem;
+  color: #555555;
+  margin: 0;
+}
+
+.studyWhat {
+  width: 230px;
+  height: 43px;
+  margin-right: 10px;
+  border: 1px solid #d9534f;
+  border-radius: 4px;
+  padding-left: 10px;
+}

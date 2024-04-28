@@ -82,7 +82,7 @@ function QuizPage() {
     // setQuestion("Question 2");
     // setChoices(["hey", "hi", "hello", "hola"]);
     quizCounter++;
-    console.log(quizList);
+    console.log(quizCounter);
     setQuestion(quizList[quizCounter].question);
     setChoices(quizList[quizCounter].choices);
     (

@@ -14,7 +14,7 @@ const Dashboard = () => {
     { title: "vocabulary 2", lastOpened: "01/01/2023" },
   ];
   return (
-    <div style={styles.container}>
+    <div style={{ ...styles.container, flexDirection: "column", boxSizing: "border-box" }}>
       <span className="left-column" />
       <Link href="/dashboard" className="button" id="left1">
         <span>Dashboard</span>

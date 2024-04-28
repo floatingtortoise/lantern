@@ -34,7 +34,7 @@ class Upload extends Component {
     // Request made to the backend api
     // Send formData object
 
-    // axios.post("api/uploadfile", formData);
+    axios.post("http://localhost:8080/document/upload", formData);
   };
 
   // File content to be displayed after

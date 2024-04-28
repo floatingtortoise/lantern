@@ -3,19 +3,7 @@ import os
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-# def ask_gpt3(prompt):
-#     response = openai.chat.completions.create(
-#         model="gpt-3.5-turbo",
-#         messages=[{"role": "user", "content": prompt}],
-#         n=1,                    # How many chat completion choices to generate for each input message
-#         temperature=0.5,        # controls the randomness of the output
-#         #@todo: cap the file size and the response size. the max of this model is 16385 tokens
-#         max_tokens= 2000,        # of the generated response
-#         top_p=1.0,              # also controls the randomness/variability
-#         frequency_penalty=0.0,  # zero penalty for repeated words
-#         presence_penalty=0.0    # similarly
-#     )
-#     return response.choices[0].message.content
+
 
 def ask_gpt3(prompt):
     system_content = """
@@ -29,6 +17,7 @@ def ask_gpt3(prompt):
         there are comma both between the question and the choices list and between the choices. 
         The entire question is contained in "{}", separated by comma from other questions.
     """
+
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages = [{"role": "system", "content": system_content},

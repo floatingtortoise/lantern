@@ -2,7 +2,6 @@
 from flask import Blueprint, request, jsonify, current_app, make_response
 from werkzeug.utils import secure_filename
 from ..services.text_extraction import extract_text
-# from ..services.gpt3_service import ask_gpt3
 from ..services.gpt3_service import ask_gpt3, ask_gpt3_follow
 import os
 
@@ -19,7 +18,6 @@ def allowed_file(filename):
 @quiz_bp.route('/create_quiz', methods=['GET'])
 def create_quiz():
     message = "molecules"
-    #message = request.form.get('message', '')  # Extract text message from form data
 
     files = request.files.getlist('files')  # Allows for multiple files
     material = []
