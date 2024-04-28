@@ -24,8 +24,10 @@ def ask_gpt3(prompt):
         When both are provided, please focus each question only on the topic, if provided.
         Regarding the materials, it only serves as a reference for the scope the questions on that topic should be limited to.
         When you generate the quiz, please take into consideration the key concepts and skills related to the topic.
-        Each question has a list of 4 choices, with only the first choice being the correct answer. Each question 
-        follows the format: {'question': '...', 'choices': ['...', '...', '...', '...']}
+        Each question has a list of 4 choices, with only the first choice being the correct answer. Each question follows the format: 
+        {question, [choice1,choice2,choice3,choice4]}, which is a question folloed by a list of choices contained by "[]", 
+        there are comma both between the question and the choices list and between the choices. 
+        The entire question is contained in "{}", separated by comma from other questions.
     """
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",

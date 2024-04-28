@@ -19,15 +19,18 @@ function QuizPage() {
   //let quizList: Quiz[] = [];
 
   function parseQuizQuestions(inputText: string) {
-    const data = JSON.parse(inputText);
-    const quizQuestions = data["quiz_question(s)"];
-    const questionBlocks = quizQuestions.trim().split("\n\n");
     const parsedQuizList: Quiz[] = [];
 
+    const data = JSON.parse(inputText);
+    const quizQuestions = data["quiz_question(s)"];
+    const questionBlocks = quizQuestions.trim().split("\n");
+
     questionBlocks.forEach((block: string) => {
-      const lines = block.split("\n").map(line => line.trim());
-      const this_question = lines[0];
-      const this_choices = [lines[2], lines[3], lines[4], lines[5]];
+      const [questionText, choicesText] = block.replace("{", "").replace("}", "").split(", [");
+      // Extract the question (remove leading/trailing whitespace)
+      const this_question = questionText.trim();
+      // Extract choices and remove square brackets and extra whitespace
+      const this_choices = choicesText ? choicesText.replace("]", "").split(","):[];
       parsedQuizList.push({
         question: this_question,
         choices: this_choices
@@ -36,30 +39,32 @@ function QuizPage() {
 
     return parsedQuizList;
   }
-
+  
   useEffect(() => {
-    fetch('http://localhost:8080/quiz/create_quiz')
-      .then(response => response.json())
-      // set variables to the response from the server
-      .then((data) => {
-        const jsonString = JSON.stringify(data);
-        const thisList = parseQuizQuestions(jsonString);
-        setQuizList(thisList);
-        console.log(thisList);
-        setQuestion(thisList[quizCounter].question);
-        setChoices(thisList[quizCounter].choices);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setQuestion("Select all that are true about molecules");
-        setChoices([
-          "Molecules make up matter.",
-          "Molcules are compounds.",
-          "Molecules are made of atoms.",
-          "All of the above",
-        ]);
-      });
+    if (typeof window !== 'undefined') {
+      fetch('http://localhost:8080/quiz/create_quiz')
+        .then(response => response.json())
+        .then((data) => {
+          const jsonString = JSON.stringify(data);
+          const thisList = parseQuizQuestions(jsonString);
+          setQuizList(thisList);
+          console.log(thisList);
+          setQuestion(thisList[quizCounter].question);
+          setChoices(thisList[quizCounter].choices);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setQuestion("Select all that are true about molecules");
+          setChoices([
+            "Molecules make up matter.",
+            "Molecules are compounds.",
+            "Molecules are made of atoms.",
+            "All of the above",
+          ]);
+        });
+    }
   }, []);
+  
 
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 
