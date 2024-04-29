@@ -45,6 +45,7 @@ const Dashboard = () => {
 
 
   const submitMessage = async () => {
+    console.log('Sending message:', message); 
     const newCard = {
       title: inputValue,
       lastOpened: new Date().toLocaleDateString(),
@@ -63,6 +64,8 @@ const Dashboard = () => {
       }
     });
     const newData = await response.json();
+    setData(newData); // Update the context with the new data
+    console.log(newData);
     setMessage(newData.message);
   };
   
