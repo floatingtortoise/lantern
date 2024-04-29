@@ -12,11 +12,13 @@ function QuizPage() {
   const [question, setQuestion] = React.useState("loading");
   //const [choices, setChoices] = React.useState([]);
   const [choices, setChoices] = React.useState<string[]>([]);
-  // Initialize global quiz question counter
-  // State for quizList
-  const [quizList, setQuizList] = useState<Quiz[]>([]);
+   // Initialize global quiz question counter
+   //let quizCounter = 0;
+   const [quizCounter, setQuizCounter] = useState(0);
+
+   // State for quizList
+   const [quizList, setQuizList] = useState<Quiz[]>([]);
   //let quizList: Quiz[] = [];
-  let [quizCounter, setQuizCounter] = useState(0);
 
   function parseQuizQuestions(inputText: string) {
     const parsedQuizList: Quiz[] = [];
@@ -26,29 +28,24 @@ function QuizPage() {
     const questionBlocks = quizQuestions.trim().split("\n");
 
     questionBlocks.forEach((block: string) => {
-      const [questionText, choicesText] = block
-        .replace("{", "")
-        .replace("}", "")
-        .split(", [");
+      const [questionText, choicesText] = block.replace("{", "").replace("}", "").split(", [");
       // Extract the question (remove leading/trailing whitespace)
       const this_question = questionText.trim();
       // Extract choices and remove square brackets and extra whitespace
-      const this_choices = choicesText
-        ? choicesText.replace("]", "").split(",")
-        : [];
+      const this_choices = choicesText ? choicesText.replace("]", "").split(","):[];
       parsedQuizList.push({
         question: this_question,
-        choices: this_choices,
+        choices: this_choices
       });
     });
 
     return parsedQuizList;
   }
-
+  
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      fetch("http://localhost:8080/quiz/create_quiz")
-        .then((response) => response.json())
+    if (typeof window !== 'undefined') {
+      fetch('http://localhost:8080/quiz/create_quiz')
+        .then(response => response.json())
         .then((data) => {
           const jsonString = JSON.stringify(data);
           const thisList = parseQuizQuestions(jsonString);
@@ -59,24 +56,18 @@ function QuizPage() {
         })
         .catch((error) => {
           console.error("Error:", error);
-          const thisList = [
-            { question: "hey", choices: ["hi", "hello", "hola"] },
-            { question: "sfd", choices: ["hi", "hello", "hola"] },
-            { question: "fsd", choices: ["hi", "hello", "hola"] },
-          ];
-          setQuizList(thisList);
-          setQuestion(thisList[quizCounter].question);
-          setChoices(thisList[quizCounter].choices);
-          // setQuestion("Select all that are true about molecules");
-          // setChoices([
-          //   "Molecules make up matter.",
-          //   "Molecules are compounds.",
-          //   "Molecules are made of atoms.",
-          //   "All of the above",
-          // ]);
+          setQuestion("Select all that are true about molecules");
+          setChoices([
+            "Molecules make up matter.",
+            "Molecules are compounds.",
+            "Molecules are made of atoms.",
+            "All of the above",
+          ]);
         });
     }
   }, []);
+  
+  
 
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 
@@ -91,12 +82,14 @@ function QuizPage() {
   };
 
   const handleSubmit = (quizList: Quiz[]) => {
-    // setQuestion("Question 2");
-    // setChoices(["hey", "hi", "hello", "hola"]);
-    quizCounter++;
-    console.log(quizCounter);
-    setQuestion(quizList[quizCounter].question);
-    setChoices(quizList[quizCounter].choices);
+    if (quizCounter < quizList.length - 1) {
+      setQuizCounter(quizCounter + 1);
+      setQuestion(quizList[quizCounter + 1].question);
+      setChoices(quizList[quizCounter].choices);
+    } else {
+      setQuestion("No more questions!");
+      setChoices([]);
+    }
     (
       document.getElementById("feedback-correct") as HTMLInputElement
     ).style.display = "none";
@@ -131,9 +124,13 @@ function QuizPage() {
   };
 
   return (
+
     <div className="container">
-      <span className="left-column" />
-      <Link href="/dashboard" className="button" id="left1">
+
+      <span
+        className="left-column"
+      />
+       <Link href="/dashboard" className="button" id="left1">
         <span>Dashboard</span>
       </Link>
 
@@ -168,45 +165,13 @@ function QuizPage() {
         <span className="view-notes">View Notes</span>
       </button>
 
-      <div className="quiz">
+      <div className='quiz'>
         <span className="quiz-question">{question}</span>
         <div className="quiz-answers">
-          <button
-            className={`quiz-answer ${
-              selectedAnswers.includes("answer1") ? "selected" : ""
-            }`}
-            id="answer1"
-            onClick={() => handleAnswerClick("answer1")}
-          >
-            {choices[0]}
-          </button>
-          <button
-            className={`quiz-answer ${
-              selectedAnswers.includes("answer2") ? "selected" : ""
-            }`}
-            id="answer2"
-            onClick={() => handleAnswerClick("answer2")}
-          >
-            {choices[1]}
-          </button>
-          <button
-            className={`quiz-answer ${
-              selectedAnswers.includes("answer3") ? "selected" : ""
-            }`}
-            id="answer3"
-            onClick={() => handleAnswerClick("answer3")}
-          >
-            {choices[2]}
-          </button>
-          <button
-            className={`quiz-answer ${
-              selectedAnswers.includes("answer4") ? "selected" : ""
-            }`}
-            id="answer4"
-            onClick={() => handleAnswerClick("answer4")}
-          >
-            {choices[3]}
-          </button>
+          <button className={`quiz-answer ${selectedAnswers.includes('answer1') ? 'selected' : ''}`} id="answer1" onClick={() => handleAnswerClick('answer1')}>{choices[0]}</button>
+            <button className={`quiz-answer ${selectedAnswers.includes('answer2') ? 'selected' : ''}`} id="answer2" onClick={() => handleAnswerClick('answer2')}>{choices[1]}</button>
+            <button className={`quiz-answer ${selectedAnswers.includes('answer3') ? 'selected' : ''}`} id="answer3" onClick={() => handleAnswerClick('answer3')}>{choices[2]}</button>
+            <button className={`quiz-answer ${selectedAnswers.includes('answer4') ? 'selected' : ''}`} id="answer4" onClick={() => handleAnswerClick('answer4')}>{choices[3]}</button>
         </div>
 
         <button
@@ -223,9 +188,11 @@ function QuizPage() {
         >
           <span className="check-button">Submit</span>
         </button>
+
       </div>
+
     </div>
-  );
+  )
 }
 
-export default QuizPage;
+export default QuizPage
