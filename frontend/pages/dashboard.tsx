@@ -1,10 +1,10 @@
 // Dashboard.tsx
-import React from "react";
 import Link from "next/link";
 import Upload from "./upload";
+import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  const cards = [
+  const [cards, setCards] = useState([
     {
       title: "lesson 1: a matter of science",
       lastOpened: "02/01/2024",
@@ -12,7 +12,21 @@ const Dashboard = () => {
     { title: "multiplication", lastOpened: "12/11/2023" },
     { title: "vocabulary 1", lastOpened: "01/01/2022" },
     { title: "vocabulary 2", lastOpened: "01/01/2023" },
-  ];
+  ]);
+
+  const [inputValue, setInputValue] = useState("");
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  }
+  const handleSubmit = (e) => {
+    const newCard = {
+      title: inputValue,
+      lastOpened: new Date().toLocaleDateString(),
+    };
+    setCards([...cards, newCard]);
+    setInputValue("");
+  };
+
   return (
     <div style={{ ...styles.container, flexDirection: "column", boxSizing: "border-box" }}>
       <span className="left-column" />
@@ -32,11 +46,13 @@ const Dashboard = () => {
       <span className="lesson-name">
         <span>Lesson 1 - A Matter of Science</span>
       </span>
+
       <span>
-        <input style={styles.studyWhat} placeholder="What do you want to study?"></input>
-        <button style={styles.uploadButton}>Submit</button>
+        <input style={styles.studyWhat} placeholder="What do you want to study?" value={inputValue} onChange={handleInputChange}></input>
+        <button style={styles.uploadButton} onClick={handleSubmit}>Submit</button>
         <Upload  />
       </span>
+
       <div style={styles.cardsContainer}>
         {cards.map((card, index) => (
           <Link href="/" key={index}>
