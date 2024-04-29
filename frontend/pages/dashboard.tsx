@@ -6,10 +6,7 @@ import Upload from "./upload";
 
 const Dashboard = () => {
   const [cards, setCards] = useState([
-    {
-      title: "lesson 1: a matter of science",
-      lastOpened: "02/01/2024",
-    },
+    { title: "lesson 1: a matter of science", lastOpened: "02/01/2024"},
     { title: "multiplication", lastOpened: "12/11/2023" },
     { title: "vocabulary 1", lastOpened: "01/01/2022" },
     { title: "vocabulary 2", lastOpened: "01/01/2023" },
