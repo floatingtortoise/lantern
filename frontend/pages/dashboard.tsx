@@ -86,7 +86,7 @@ const Dashboard = () => {
       <span className="home-text">Lantern AI</span>
 
       <span className="lesson-name">
-        <span>Lesson 1 - A Matter of Science</span>
+        <span>Welcome Back!</span>
       </span>
       <span>
         <input type="text" onChange={handleChange} style={styles.studyWhat} placeholder="What do you want to study?"></input>

@@ -100,7 +100,7 @@ function QuizPage() {
       <span className="home-text">Lantern AI</span>
 
       <span className="lesson-name">
-        <span>Lesson 1 - A Matter of Science</span>
+        <span>Question {quizCounter+1}</span>
       </span>
 
       <span id="feedback-correct">
