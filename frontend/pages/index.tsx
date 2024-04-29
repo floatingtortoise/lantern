@@ -15,6 +15,8 @@ function QuizPage() {
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [previousQuestions, setPreviousQuestions] = useState<string[]>([]); // Stores all previous questions
+  const [followUpQuestion, setFollowUpQuestion] = useState('');
 
 
   function parseQuizQuestions(data: any): Quiz[] {
@@ -37,7 +39,7 @@ function QuizPage() {
     return parsedQuizList;
   }
 
-  const { data } = useContext(DataContext);
+  const { data, initialMessage } = useContext(DataContext);
   useEffect(() => {
     if (data) {
       const quizData = parseQuizQuestions(data);
@@ -50,7 +52,7 @@ function QuizPage() {
         setChoices([]);
       }
     }
-  }, [data]);
+  }, [data, initialMessage]);
 
   const handleAnswerClick = (answerId: string) => {
     setSelectedAnswers([answerId]);
@@ -58,10 +60,33 @@ function QuizPage() {
     console.log("Answer clicked:", answerId);
   };
 
-  const handleSubmit = () => {
-    setIsCorrect(selectedAnswers[0] === "answer1");
+  const handleSubmit = async () => {
+    const correct = selectedAnswers[0] === "answer1"; // Assume "answer1" is the correct answer
+    setIsCorrect(correct);
     console.log("Correct Answer:", "answer1", "Selected Answer:", selectedAnswers[0]);
     setIsSubmitted(true);
+
+    if (!correct) {
+      // Gather data for follow-up if the answer is wrong
+      await fetchFollowUp(question, selectedAnswers[0]);
+    }
+  };
+
+  const fetchFollowUp = async (question: string, userAnswer: string) => {
+    const formData = new URLSearchParams();
+    formData.append('question', question);
+    formData.append('answer', userAnswer);
+    formData.append('message', initialMessage);
+    formData.append('previousQuestions', previousQuestions.join(", "));
+
+    const response = await fetch('http://localhost:8080/quiz/follow_up', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData
+    });
+    const data = await response.json();
+    setFollowUpQuestion(data.follow_up_question); // Update follow-up question
+    console.log("Follow up question:", data.follow_up_question);
   };
 
   const handleContinue = () => {
@@ -149,6 +174,12 @@ function QuizPage() {
           </button>
         )}
       </div>
+      {isSubmitted && !isCorrect && followUpQuestion && (
+        <div className="follow-up-container">
+          <h3>Follow-Up Question</h3>
+          <p>{followUpQuestion}</p>
+        </div>
+      )}      
     </div>
   )
 }

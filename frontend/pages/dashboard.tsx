@@ -5,6 +5,8 @@ import Link from "next/link";
 import Upload from "./upload";
 
 const Dashboard = () => {
+  // const { data, setData, initialMessage, setInitialMessage } = useContext(DataContext);
+
   const [cards, setCards] = useState([
     { title: "lesson 1: a matter of science", lastOpened: "02/01/2024"},
     { title: "multiplication", lastOpened: "12/11/2023" },
@@ -32,17 +34,11 @@ const Dashboard = () => {
     setInputValue(event.target.value);
   };
 
-  // const fetchMessage = async () => {
-  //   const response = await fetch('http://localhost:8080/quiz/create_quiz')
-  //   const data = await response.json()
-  //   setMessage(data)
-  // }
-
-  const { setData } = useContext(DataContext);
-
+  const { setData, setInitialMessage } = useContext(DataContext);
 
   const submitMessage = async () => {
     console.log('Sending message:', message); 
+    setInitialMessage(message); // Save the initial message to context
     const newCard = {
       title: inputValue,
       lastOpened: new Date().toLocaleDateString(),
@@ -63,7 +59,6 @@ const Dashboard = () => {
     const newData = await response.json();
     setData(newData); // Update the context with the new data
     console.log(newData);
-    setMessage(newData.message);
   };
   
   return (

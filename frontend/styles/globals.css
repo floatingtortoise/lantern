@@ -227,3 +227,17 @@ body {
 #submit-button{
   display: none;
 }
+
+.follow-up-container {
+  top: 250px;
+  right: 30px; /* Adjusted to position on the right side */
+  color: rgba(0, 0, 0, 1);
+  background-color: rgb(255, 200, 150); /* Slightly lighter shade for visibility */
+  position: absolute;
+  font-size: 14px; /* Slightly larger for readability */
+  text-align: left;
+  padding: 20px;
+  width: 250px; /* Slightly wider to accommodate more text */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for better visibility */
+}
